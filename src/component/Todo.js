@@ -10,6 +10,13 @@ export const Todo = (props) => {
     setTitle(prompt("press enter todo", title));
   };
 
+  const deleteTodo = (index) => {
+    const _title = [...title];
+    _title.splice(index, 1);
+    setTitle(_title);
+    console.log(title);
+  };
+
   return (
     <div className='todo_cart'>
       <input
@@ -21,11 +28,12 @@ export const Todo = (props) => {
         className={props.status ? "done" : "undone"}
         onClick={handleClick}
         ref={titleRef}>
-        {props.task}
+        {/* пропсы - {props.task}; */}
+        измененные - {title}
       </h4>
       <button
         onClick={() => {
-          props.deleteTodo(props.id);
+          deleteTodo(props.id);
         }}>
         delete
       </button>

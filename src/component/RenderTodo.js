@@ -6,31 +6,23 @@ export const RenderTodo = (props) => {
   const [todos, setTodos] = useState(Todos);
   const [doneTodo, setDoneTodo] = useState([]);
   //const [content, setContent] = useState("");
-  const [newtodos, setNewTodos] = useState({
-    task: "",
-    status: false,
-    id: Math.floor(Math.random() * 10000),
-  });
-
-  const onTodoChange = (e) => {
-    e.preventDefault();
-    let text = e.target.value;
-    setNewTodos((actual) => {
-      return { ...actual, task: text };
-    });
-  };
+  const [newtodos, setNewTodos] = useState("");
 
   const addTodo = () => {
-    const _todos = [...todos];
-    _todos.push(newtodos);
-    setTodos(_todos);
+    const newTodo = {
+      task: newtodos,
+      status: false,
+      id: Math.floor(Math.random() * 10000),
+    };
+    setTodos([...todos, newTodo]);
+    setNewTodos("");
   };
 
-  const deleteTodo = (index) => {
-    const _todos = [...todos];
-    _todos.splice(index, 1);
-    setTodos(_todos);
-  };
+  // const deleteTodo = (index) => {
+  //   const _todos = [...todos];
+  //   _todos.splice(index, 1);
+  //   setTodos(_todos);
+  // };
   const lengthDoneTodo = () => {
     const length = todos.filter((todo) => todo.status);
     console.log(length);
@@ -48,7 +40,7 @@ export const RenderTodo = (props) => {
   const todo = todos.map((item, index) => (
     <Todo
       onChangeStatus={onChangeStatus}
-      deleteTodo={deleteTodo}
+      //deleteTodo={deleteTodo}
       task={item.task}
       id={index}
       status={item.status}
@@ -58,10 +50,10 @@ export const RenderTodo = (props) => {
   return (
     <section>
       <div>
-        <form onSubmit={onTodoChange}>
-          <input value={newtodos.task} onChange={onTodoChange}></input>
-          <button onClick={addTodo}>add</button>
-        </form>
+        <input
+          value={newtodos}
+          onChange={(e) => setNewTodos(e.target.value)}></input>
+        <button onClick={addTodo}>add</button>
       </div>
       <div>{todo}</div>
       <div className='progres'>
