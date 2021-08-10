@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./style.css";
 
 export const Todo = (props) => {
@@ -10,12 +10,9 @@ export const Todo = (props) => {
     setTitle(prompt("press enter todo", title));
   };
 
-  const deleteTodo = (index) => {
-    const _title = [...title];
-    _title.splice(index, 1);
-    setTitle(_title);
-    console.log(title);
-  };
+  useEffect(() => {
+    setTitle(props.task);
+  }, [props.task]);
 
   return (
     <div className='todo_cart'>
@@ -28,12 +25,12 @@ export const Todo = (props) => {
         className={props.status ? "done" : "undone"}
         onClick={handleClick}
         ref={titleRef}>
-        {/* пропсы - {props.task}; */}
-        измененные - {title}
+        {/* {props.task} */}
+        {title}
       </h4>
       <button
         onClick={() => {
-          deleteTodo(props.id);
+          props.deleteTodo(props.id);
         }}>
         delete
       </button>

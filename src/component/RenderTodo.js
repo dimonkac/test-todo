@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Todo } from "./Todo";
 import { Todos } from "./Todos";
 
-export const RenderTodo = (props) => {
+export const RenderTodo = () => {
   const [todos, setTodos] = useState(Todos);
   const [doneTodo, setDoneTodo] = useState([]);
-  //const [content, setContent] = useState("");
   const [newtodos, setNewTodos] = useState("");
 
   const addTodo = () => {
@@ -18,11 +17,11 @@ export const RenderTodo = (props) => {
     setNewTodos("");
   };
 
-  // const deleteTodo = (index) => {
-  //   const _todos = [...todos];
-  //   _todos.splice(index, 1);
-  //   setTodos(_todos);
-  // };
+  const deleteTodo = (index) => {
+    const _todos = [...todos];
+    _todos.splice(index, 1);
+    setTodos([..._todos]);
+  };
   const lengthDoneTodo = () => {
     const length = todos.filter((todo) => todo.status);
     console.log(length);
@@ -40,10 +39,11 @@ export const RenderTodo = (props) => {
   const todo = todos.map((item, index) => (
     <Todo
       onChangeStatus={onChangeStatus}
-      //deleteTodo={deleteTodo}
+      deleteTodo={() => deleteTodo(index)}
       task={item.task}
       id={index}
       status={item.status}
+      key={index}
     />
   ));
 
